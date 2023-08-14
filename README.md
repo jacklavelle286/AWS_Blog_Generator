@@ -59,6 +59,12 @@ These items are stored within this repository, you will have to download it to y
   sed -i "s/bucket-name/$(echo $BUCKET_NAME)/g" access-policy.json
   ```
 
+### 4.5 Check that this has worked - you should see your bucket name reflected in the resource field in the policy
+
+  ```bash
+  cat access-policy.json
+  ```
+
 ### 5. Create the IAM role
 
   ```bash
