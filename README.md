@@ -16,15 +16,15 @@ These instructions are written to use the AWS CLI exclusively, so you either nee
 
 These items are stored within this repository, you will have to download it to your local machine and unzip them, and run this lab in the same directory (I designed this specifically to use AWS CloudShell but any CLI environment will work.)
 
-1. OpenAi API Key saved in a text file called open_ai_creds.txt (you will have to retrieve your own one and store it in this file)
+1. OpenAi API Key saved in a text file called `open_ai_creds.txt` (you will have to retrieve your own one and store it in this file)
 
-2. Openai layer in lambda, the ARN within a text file called layerarn.txt (you can choose to either keep this or use your own Lambda Layer - this runtime is specified for Python3.7)
+2. Openai layer in lambda, the ARN within a text file called `layerarn.txt` (you can choose to either keep this or use your own Lambda Layer - this runtime is specified for Python3.7)
 
-3. The code file written in Python (functioncode.py)
+3. The code file written in Python called `functioncode.py`
 
 4. Lambda trust policy (trust-policy.json)
 
-##### 1 Set our chosen bucket name to a variable called BUCKET_NAME
+##### 1 Set our chosen bucket name to a variable called `$BUCKET_NAME`
 
   ```bash
   BUCKET_NAME=my-blog-bucket
@@ -35,7 +35,7 @@ These items are stored within this repository, you will have to download it to y
   aws s3 mb s3://$BUCKET_NAME
   ```
 
-#### 3. Edit the functioncode.py, replacing the placeholder with your new bucket name using the sed command
+#### 3. Edit the `functioncode.py` replacing the placeholder with your new bucket name using the `sed` command
 
   ```bash
   sed -i "s/bucket-name/$(echo $BUCKET_NAME)/g" functioncode.py
@@ -47,13 +47,13 @@ These items are stored within this repository, you will have to download it to y
   cat functioncode.py
   ```
 
-#### 5. Compress our code using the Zip command ready to use with our Lambda Function later
+#### 5. Compress our code using the `zip` command ready to use with our Lambda Function later
 
   ```bash
   zip function.zip functioncode.py
   ```
 
-#### 6. Replace the bucket name within your IAM permissions policy using the sed command
+#### 6. Replace the bucket name within your IAM permissions policy using the `sed` command
 
   ```bash
   sed -i "s/bucket-name/$(echo $BUCKET_NAME)/g" access-policy.json
@@ -71,32 +71,32 @@ These items are stored within this repository, you will have to download it to y
   ROLE_ARN=$(aws iam create-role --role-name LambdaRole --assume-role-policy-document file://trust-policy.json --query 'Role.Arn' --output text)
   ```
 
-#### 9. Create the IAM policy for our Lamdba function, using access-policy.json document
+#### 9. Create the IAM policy for our Lamdba function, using the `access-policy.json` document
 
   ```bash
   aws iam put-role-policy --role-name LambdaRole --policy-name LambdaPolicy --policy-document file://access-policy.json
   ```
 
-#### 10. Set your OpenAI Key as a variable called OPEN_AI_KEY
+#### 10. Set your OpenAI Key as a variable called `$OPEN_AI_KEY`
 
   ```bash
   OPENAI_KEY=$(cat open_ai_creds.txt)
   ```
 
-#### 11. Set your Lambda Layer Arn as a variable called LAYER_ARN
+#### 11. Set your Lambda Layer Arn as a variable called `$LAYER_ARN`
 
   ```bash
   LAYER_ARN=$(cat layerarn.txt)
   ```
 
-#### 12. Create our Lambda functionusing the create-function command
+#### 12. Create our Lambda functionusing the `aws lambda create-function` command
 
 
   ```bash
   LAMBDA_ARN=$(aws lambda create-function --function-name BlogFunction --zip-file fileb://function.zip --role $ROLE_ARN --layers $LAYER_ARN --runtime python3.7 --handler functioncode.lambda_handler --environment "Variables={OPENAI_API_KEY=$OPENAI_KEY}" --timeout 180 --query 'FunctionArn' --output text)
   ```
 
-#### 13. Test the function, and check that our invocation has succeeded by reading the response.json, it should say the following:
+#### 13. Test the function, and check that our invocation has succeeded by reading the `response.json` it should say the following:
 
   ```
   {
@@ -109,13 +109,13 @@ These items are stored within this repository, you will have to download it to y
   aws lambda invoke --function-name BlogFunction --payload '{}' response.json && cat response.json
   ```
 
-#### 14. Store the name of our new blog post text file we just created as a variable called OBJECT_NAME 
+#### 14. Store the name of our new blog post text file we just created as a variable called `$OBJECT_NAME`
 
   ```bash
   OBJECT_NAME=$(aws s3api list-objects --bucket $BUCKET_NAME --query 'Contents[0].Key' --output text)
   ```
 
-#### 15. Download our Blog post file, and rename it to blog.txt
+#### 15. Download our Blog post file, and rename it to `blog.txt`
 
   ```bash
   aws s3api get-object --bucket $BUCKET_NAME --key $OBJECT_NAME blog.txt
