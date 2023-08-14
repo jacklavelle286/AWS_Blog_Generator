@@ -24,7 +24,7 @@ These items are stored within this repository, you will have to download it to y
 
 4. Lambda trust policy (trust-policy.json)
 
-##### 1 Set our chosen bucket name to a variable called `$BUCKET_NAME`
+#### 1 Set our chosen bucket name to a variable called `$BUCKET_NAME`
 
   ```bash
   BUCKET_NAME=my-blog-bucket
