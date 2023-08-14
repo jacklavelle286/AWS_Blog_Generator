@@ -25,7 +25,7 @@ These items are stored within this repository, you will have to download it to y
 4. Lambda trust policy (trust-policy.json)
 
 
-### 1. Create S3 bucket and edit your Python code (you will need a globally unique bucket name)
+#### 1. Create S3 bucket and edit your Python code (you will need a globally unique bucket name)
 
   ```bash
   BUCKET_NAME=my-blog-bucket
@@ -35,49 +35,49 @@ These items are stored within this repository, you will have to download it to y
   aws s3 mb s3://$BUCKET_NAME
   ```
 
-### 2. Edit the functioncode.py, replacing the placeholder with your new bucket name using the sed command
+#### 2. Edit the functioncode.py, replacing the placeholder with your new bucket name using the sed command
 
   ```bash
   sed -i "s/bucket-name/$(echo $BUCKET_NAME)/g" functioncode.py
   ```
 
-### 2.5 Check that this has worked - you should see your bucket name in the code file on line 9
+#### 2.5 Check that this has worked - you should see your bucket name in the code file on line 9
 
   ```bash
   cat functioncode.py
   ```
 
-### 3. Zip it up for use with our Lambda Function later
+#### 3. Zip it up for use with our Lambda Function later
 
   ```bash
   zip function.zip functioncode.py
   ```
 
-### 4. Also, replace the bucket name within your IAM permissions policy using the sed command
+#### 4. Also, replace the bucket name within your IAM permissions policy using the sed command
 
   ```bash
   sed -i "s/bucket-name/$(echo $BUCKET_NAME)/g" access-policy.json
   ```
 
-### 4.5 Check that this has worked - you should see your bucket name reflected in the resource field in the policy
+#### 4.5 Check that this has worked - you should see your bucket name reflected in the resource field in the policy
 
   ```bash
   cat access-policy.json
   ```
 
-### 5. Create the IAM role
+#### 5. Create the IAM role
 
   ```bash
   ROLE_ARN=$(aws iam create-role --role-name LambdaRole --assume-role-policy-document file://trust-policy.json --query 'Role.Arn' --output text)
   ```
 
-### 6. Create the IAM policy
+#### 6. Create the IAM policy
 
   ```bash
   aws iam put-role-policy --role-name LambdaRole --policy-name LambdaPolicy --policy-document file://access-policy.json
   ```
 
-### 7. Create function using layer ARN and your openai key
+#### 7. Create function using layer ARN and your openai key
 
   ```bash
   OPENAI_KEY=$(cat open_ai_creds.txt)
@@ -91,7 +91,7 @@ These items are stored within this repository, you will have to download it to y
   LAMBDA_ARN=$(aws lambda create-function --function-name BlogFunction --zip-file fileb://function.zip --role $ROLE_ARN --layers $LAYER_ARN --runtime python3.7 --handler functioncode.lambda_handler --environment "Variables={OPENAI_API_KEY=$OPENAI_KEY}" --timeout 180 --query 'FunctionArn' --output text)
   ```
 
-### 8. Test the function and read our first blog post!
+#### 8. Test the function and read our first blog post!
 
   ```bash
   aws lambda invoke --function-name BlogFunction --payload '{}' response.json && cat response.json
@@ -109,7 +109,7 @@ These items are stored within this repository, you will have to download it to y
   aws s3api get-object --bucket $BUCKET_NAME --key $OBJECT_NAME blog.txt
   ```
 
-### 9. Add daily trigger using Amazon EventBridge (Optional)
+#### 9. Add daily trigger using Amazon EventBridge (Optional)
 
   ```bash
   RULE_ARN=$(aws events put-rule --name daily-9am --schedule-expression "cron(0 8 * * ? *)" --query 'RuleArn' --output text)
@@ -123,4 +123,4 @@ These items are stored within this repository, you will have to download it to y
   aws events put-targets --rule daily-9am --targets Id=1,Arn=$LAMBDA_ARN
   ```
 
-### Feel free to reach out at lavellej286@gmail.com if you have any questions, and feel free to submit pull requests. 
+#### Feel free to reach out at lavellej286@gmail.com if you have any questions, and feel free to submit pull requests. 
