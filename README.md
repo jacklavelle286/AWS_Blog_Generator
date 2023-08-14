@@ -16,7 +16,7 @@ These instructions are written to use the AWS CLI exclusively, so you either nee
 
 These items are stored within this repository, you will have to download it to your local machine and unzip them, and run this lab in the same directory (I designed this specifically to use AWS CloudShell but any CLI environment will work.)
 
-1. OpenAi API Key saved in a text file called openaicreds.txt (you will have to retrieve your own one and store it in this file)
+1. OpenAi API Key saved in a text file called open_ai_creds.txt (you will have to retrieve your own one and store it in this file)
 
 2. Openai layer in lambda, the ARN within a text file called layerarn.txt (you can choose to either keep this or use your own Lambda Layer - this runtime is specified for Python3.7)
 
