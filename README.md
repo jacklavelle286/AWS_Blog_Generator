@@ -25,10 +25,10 @@ These items are stored within this repository, you will have to download it to y
 4. Lambda trust policy (trust-policy.json)
 
 
-### 1. Create S3 bucket and edit your Python code
+### 1. Create S3 bucket and edit your Python code (you will need a globally unique bucket name)
 
   ```bash
-  BUCKET_NAME=my-blog-bucket-286 
+  BUCKET_NAME=my-blog-bucket 
   aws s3 mb s3://$BUCKET_NAME
   ```
 
