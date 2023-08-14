@@ -41,6 +41,12 @@ These items are stored within this repository, you will have to download it to y
   sed -i "s/bucket-name/$(echo $BUCKET_NAME)/g" functioncode.py
   ```
 
+#### 2.5 Check that this has worked - you should see your bucket name in the code file on line 9
+
+  ```bash
+  cat functioncode.py
+  ```
+
 ### 3. Zip it up for use with our Lambda Function later
 
   ```bash
