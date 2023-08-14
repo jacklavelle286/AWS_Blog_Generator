@@ -98,10 +98,6 @@ These items are stored within this repository, you will have to download it to y
   ```
 
   ```bash
-  aws s3api list-objects --bucket $BUCKET_NAME
-  ```
-
-  ```bash
   OBJECT_NAME=$(aws s3api list-objects --bucket $BUCKET_NAME --query 'Contents[0].Key' --output text)
   ```
 
