@@ -28,7 +28,10 @@ These items are stored within this repository, you will have to download it to y
 ### 1. Create S3 bucket and edit your Python code (you will need a globally unique bucket name)
 
   ```bash
-  BUCKET_NAME=my-blog-bucket 
+  BUCKET_NAME=my-blog-bucket
+  ```
+
+  ```bash
   aws s3 mb s3://$BUCKET_NAME
   ```
 
