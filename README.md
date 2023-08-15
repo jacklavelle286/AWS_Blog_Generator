@@ -18,7 +18,7 @@ These items are stored within this repository, you will have to download it to y
 
 1. OpenAi API Key saved in a text file called `open_ai_creds.txt` (you will have to retrieve your own one and store it in this file)
 
-2. Openai layer in lambda, the ARN within a text file called `layerarn.txt` (you can choose to either keep this or use your own Lambda Layer - this runtime is specified for Python3.7)
+2. Openai layer in lambda, the ARN within a text file called `layerarn.txt` (you'll have to create and use your own Lambda Layer and store the ARN in this file, instructions on how to do this are [here](https://thedeveloperspace.com/how-to-invoke-openai-apis-from-aws-lambda-functions/))
 
 3. The code file written in Python called `functioncode.py`
 
