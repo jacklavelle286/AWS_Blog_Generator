@@ -10,7 +10,7 @@ Once the content is generated, the solution saves the blog post to an Amazon S3 
 
 This AWS Blog Generator is not just a testament to the capabilities of AI in content creation but also showcases the seamless integration possibilities between cloud services and AI platforms. Whether you're an AWS enthusiast, a content creator, or someone looking to automate parts of their content strategy, this solution offers a glimpse into the future of automated content generation.
 
-These instructions are written to use the AWS CLI exclusively, so you either need this installed on your local machine, or if you want to use the exact same commands as me, use [AWS CloudShell.](https://aws.amazon.com/cloudshell/)
+These instructions are written to use the AWS CLI exclusively, so you either need to clone this repository to your local machine, or if you want to use the exact same commands as me, use [AWS CloudShell.](https://aws.amazon.com/cloudshell/)
 
 ## Items in this repository
 
