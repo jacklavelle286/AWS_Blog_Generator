@@ -1,1 +1,1 @@
-YOUR_OPENAI_CREDS_HERE
+insertcredshere
